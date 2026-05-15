@@ -619,6 +619,14 @@ def extract_city(loc):
 
 @st.cache_data
 def load_all_data():
+    recruit_path = f"{DATA_DIR}/2. 企业招聘行为表.csv"
+    if not os.path.exists(recruit_path):
+        zip_path = f"{DATA_DIR}/2. 企业招聘行为表.zip"
+        if os.path.exists(zip_path):
+            import zipfile
+            with zipfile.ZipFile(zip_path, 'r') as z:
+                z.extractall(DATA_DIR)
+
     df_base     = pd.read_csv(f"{DATA_DIR}/1. 企业基础信息.csv", encoding="utf-8-sig", low_memory=False)
     df_recruit  = pd.read_csv(f"{DATA_DIR}/2. 企业招聘行为表.csv", encoding="utf-8-sig", low_memory=False)
     center_df   = pd.read_csv(f"{RESULT_DIR}/就业中心识别结果_簇质心.csv", encoding="utf-8-sig")
